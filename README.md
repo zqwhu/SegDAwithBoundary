@@ -13,11 +13,10 @@
 
 * Test the model and results will be saved in the `result` folder
 
-```
-
 * Compute the IoU on Cityscapes
 ```
-python compute_iou.py ./data/Cityscapes/data/gtFine/val result/cityscapes
+python evaluate_cityscapes.py 
+python compute_iou.py ./data/Cityscapes/data/gtFine/val result/gta
 ```
 
 ## Training Examples
