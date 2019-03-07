@@ -1,6 +1,12 @@
+## Performance
+![](performance/gta2citys.png)
+![](performance/syn2citys.png)
 
 ## Installation
-* Install PyTorch from http://pytorch.org with Python3
+* Python 3.6
+* pytorch 0.4.1
+* cuda 8.0
+* pip install pydensecrf
 
 
 ## Dataset

@@ -13,7 +13,6 @@ import sys
 import os
 import os.path as osp
 import matplotlib.pyplot as plt
-from show_val import show_val
 
 from multiprocessing import Pool
 import pydensecrf.densecrf as dcrf
@@ -41,17 +40,14 @@ LEARNING_RATE = 2.5e-4
 MOMENTUM = 0.9
 NUM_CLASSES = 19
 NUM_STEPS = 250000
-NUM_STEPS_STOP = 200000  # early stopping
+NUM_STEPS_STOP = 65000  # early stopping
 POWER = 0.9
 RANDOM_SEED = 1234
 RESTORE_FROM = 'http://vllab.ucmerced.edu/ytsai/CVPR18/DeepLab_resnet_pretrained_init-f81d91e8.pth'
-RESTORE_FROM="/home/zq2/.torch/models/DeepLab_resnet_pretrained_init-f81d91e8.pth"
-# RESTORE_FROM='/home/zq2/dl_test/ZQAdaptSegNet-master/snapshots/original_crop/GTA5_10.pth'
-# RESTORE_FROM = '/home/zq/dl-test/ZQAdaptSegNet-master/model/GTA2Cityscapes_multi-ed35151c.pth'
+
 SAVE_NUM_IMAGES = 2
 SAVE_PRED_EVERY = 2500
 SNAPSHOT_DIR = './snapshots/GTA/'
-pre_sv_dir='./result/gta/steps{0}'
 WEIGHT_DECAY = 0.0005
 
 LEARNING_RATE_D = 1e-4
@@ -320,9 +316,6 @@ def main():
     # labels for adversarial training
     source_label = 0
     target_label = 1
-    mIoUs = []
-    syn_mIoUs = []
-    i_iters = []
 
     for i_iter in range(args.num_steps):
 
@@ -514,15 +507,7 @@ def main():
             torch.save(model.state_dict(), osp.join(args.snapshot_dir, 'GTA5_' + str(i_iter) + '.pth'))
             torch.save(model_D1.state_dict(), osp.join(args.snapshot_dir, 'GTA5_' + str(i_iter) + '_D1.pth'))
             torch.save(model_D2.state_dict(), osp.join(args.snapshot_dir, 'GTA5_' + str(i_iter) + '_D2.pth'))
-            show_pred_sv_dir = pre_sv_dir.format(i_iter)
-            mIoU, syn_mIoU = show_val(model.state_dict(), show_pred_sv_dir)
-            mIoUs.append(str(round(np.nanmean(mIoU) * 100, 2)))
-            syn_mIoUs.append(str(round(np.nanmean(syn_mIoU) * 100, 2)))
-            i_iters.append(i_iter)
-            print_i = 0
-            for miou in mIoUs:
-                print('i{0}: {1} {2}'.format(i_iters[print_i], miou, syn_mIoUs[print_i]))
-                print_i = print_i + 1
+
 
 if __name__ == '__main__':
     main()
