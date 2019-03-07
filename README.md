@@ -1,3 +1,6 @@
+## Segmentation Domain Adaptation with Weighted Boundary Constrain
+Semantic segmentation domain adaptation from synthetic domain (GTA5 or SYNTHIA) to real domain (Cityscapes).
+
 ## Performance
 ![](performance/gta2citys.png)
 ![](performance/syn2citys.png)
